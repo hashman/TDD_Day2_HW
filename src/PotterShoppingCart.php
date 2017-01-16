@@ -42,26 +42,31 @@ class PotterShoppingCart
             $count_season++;
         }
 
-        // 先算出可以折扣的書的金額
-        $result = $count_season * $this->price_per_book;
-
         switch ($count_season) {
             case 2:
-                $result *= 0.95;
+                $discount = 0.95;
                 break;
             case 3:
-                $result *= 0.9;
+                $discount = 0.9;
                 break;
             case 4:
-                $result *= 0.8;
+                $discount = 0.8;
                 break;
             case 5:
-                $result *= 0.75;
+                $discount = 0.75;
+                break;
+            default:
+                $discount = 1;
                 break;
         }
 
-        // 沒有折扣的書已原價計算
-        $result += ($book_count - $count_season) * $this->price_per_book;
+        /**
+         * 先計算可以折扣的書
+         * 再計算不可以折扣的書
+         */
+        $discount_price = ($count_season * $this->price_per_book) * $discount;
+        $origin_price   = ($book_count - $count_season) * $this->price_per_book;
+        $result         = $discount_price + $origin_price;
 
         return $result;
     }
