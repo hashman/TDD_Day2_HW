@@ -42,8 +42,10 @@ class PotterShoppingCart
             $count_season++;
         }
 
-        if ($count_season >= 2) {
+        if ($count_season === 2) {
             $result *= 0.95;
+        } else if ($count_season >= 3) {
+            $result *= 0.9;
         }
 
         return $result;
