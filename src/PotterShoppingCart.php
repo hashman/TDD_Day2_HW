@@ -6,6 +6,7 @@ class PotterShoppingCart
     private $books = [];
     // 定價一本為 100 元
     private $price_per_book = 100;
+    private $book_count = 0;
 
     /**
      * PotterShoppingCart constructor.
@@ -17,6 +18,7 @@ class PotterShoppingCart
      */
     public function __construct(int $first_season = 0, int $second_season = 0, int $third_season = 0, int $forth_season = 0, int $fifth_season = 0)
     {
+        $this->book_count = 0;
         $this->books =[
             $first_season,
             $second_season,
@@ -34,17 +36,17 @@ class PotterShoppingCart
     {
         $result = 0;
         for ($i = 0; $i < 5; $i++) {
-            $book_count = 0;
+            $this->book_count = 0;
             $count_season = 0;
             for ($j = 0; $j < 5; $j++) {
                 if ($this->books[$j] <= 0) {
                     continue;
                 }
                 $this->books[$j]--;
-                $book_count++;
+                $this->book_count++;
                 $count_season++;
             }
-            $result += $book_count * $this->price_per_book * $this->getDiscountPercent($count_season);
+            $result += $this->book_count * $this->price_per_book * $this->getDiscountPercent($count_season);
         }
 
         return $result;
