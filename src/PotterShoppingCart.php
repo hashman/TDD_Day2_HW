@@ -48,7 +48,7 @@ class PotterShoppingCart
                 $this->book_count++;
                 $this->count_season++;
             }
-            $result += $this->book_count * $this->price_per_book * $this->getDiscountPercent();
+            $result += $this->getDiscountPrice();
         }
 
         return $result;
@@ -79,5 +79,14 @@ class PotterShoppingCart
         }
 
         return $discount;
+    }
+
+    /**
+     * 取得 discount 後的金額
+     * @return float|int
+     */
+    private function getDiscountPrice()
+    {
+        return $this->book_count * $this->price_per_book * $this->getDiscountPercent();
     }
 }
