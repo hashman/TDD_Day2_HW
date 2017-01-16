@@ -33,8 +33,17 @@ class PotterShoppingCart
     public function getPrice()
     {
         $result = 0;
+        $count_season = 0;
         foreach ($this->books as $book) {
+            if ($book <= 0) {
+                continue;
+            }
             $result += $this->price_per_book * $book;
+            $count_season++;
+        }
+
+        if ($count_season >= 2) {
+            $result *= 0.95;
         }
 
         return $result;
