@@ -47,9 +47,11 @@ class PotterShoppingCart
                 $result *= 0.95;
                 break;
             case 3:
+                $result *= 0.9;
+                break;
             case 4:
             case 5:
-                $result *= 0.9;
+                $result *= 0.8;
                 break;
         }
 
