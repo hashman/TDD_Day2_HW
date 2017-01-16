@@ -32,25 +32,20 @@ class PotterShoppingCart
      */
     public function getPrice()
     {
-        $count_season = 0;
-        $book_count = 0;
-        foreach ($this->books as $book) {
-            if ($book <= 0) {
-                continue;
+        $result = 0;
+        for ($i = 0; $i < 5; $i++) {
+            $book_count = 0;
+            $count_season = 0;
+            for ($j = 0; $j < 5; $j++) {
+                if ($this->books[$j] <= 0) {
+                    continue;
+                }
+                $this->books[$j]--;
+                $book_count++;
+                $count_season++;
             }
-            $book_count += $book;
-            $count_season++;
+            $result += $book_count * $this->price_per_book * $this->getDiscountPercent($count_season);
         }
-
-        $discount = $this->getDiscountPercent($count_season);
-
-        /**
-         * 先計算可以折扣的書
-         * 再計算不可以折扣的書
-         */
-        $discount_price = ($count_season * $this->price_per_book) * $discount;
-        $origin_price   = ($book_count - $count_season) * $this->price_per_book;
-        $result         = $discount_price + $origin_price;
 
         return $result;
     }
