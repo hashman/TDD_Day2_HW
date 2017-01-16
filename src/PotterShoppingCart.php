@@ -32,15 +32,18 @@ class PotterShoppingCart
      */
     public function getPrice()
     {
-        $result = 0;
         $count_season = 0;
+        $book_count = 0;
         foreach ($this->books as $book) {
             if ($book <= 0) {
                 continue;
             }
-            $result += $this->price_per_book * $book;
+            $book_count += $book;
             $count_season++;
         }
+
+        // 先算出可以折扣的書的金額
+        $result = $count_season * $this->price_per_book;
 
         switch ($count_season) {
             case 2:
@@ -56,6 +59,9 @@ class PotterShoppingCart
                 $result *= 0.75;
                 break;
         }
+
+        // 沒有折扣的書已原價計算
+        $result += ($book_count - $count_season) * $this->price_per_book;
 
         return $result;
     }
