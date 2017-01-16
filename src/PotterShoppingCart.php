@@ -42,6 +42,26 @@ class PotterShoppingCart
             $count_season++;
         }
 
+        $discount = $this->getDiscountPercent($count_season);
+
+        /**
+         * 先計算可以折扣的書
+         * 再計算不可以折扣的書
+         */
+        $discount_price = ($count_season * $this->price_per_book) * $discount;
+        $origin_price   = ($book_count - $count_season) * $this->price_per_book;
+        $result         = $discount_price + $origin_price;
+
+        return $result;
+    }
+
+    /**
+     * 依照購買個集數回傳折扣
+     * @param $count_season
+     * @return float|int
+     */
+    private function getDiscountPercent($count_season)
+    {
         switch ($count_season) {
             case 2:
                 $discount = 0.95;
@@ -60,14 +80,6 @@ class PotterShoppingCart
                 break;
         }
 
-        /**
-         * 先計算可以折扣的書
-         * 再計算不可以折扣的書
-         */
-        $discount_price = ($count_season * $this->price_per_book) * $discount;
-        $origin_price   = ($book_count - $count_season) * $this->price_per_book;
-        $result         = $discount_price + $origin_price;
-
-        return $result;
+        return $discount;
     }
 }
