@@ -1,4 +1,5 @@
 <?php
+use App\PotterShoppingCart;
 
 class PotterShoppingCartTest extends \PHPUnit\Framework\TestCase
 {
