@@ -5,12 +5,13 @@ use PHPUnit_Framework_Assert as PHPUnit;
 
 class FeatureContext implements Context
 {
-    private $first_season,
-        $second_season,
-        $third_season,
-        $forth_season,
-        $fifth_season;
     private $potterShoppingCart;
+    private $total_price;
+
+    public function __construct()
+    {
+        $this->potterShoppingCart = new PotterShoppingCart();
+    }
 
     /**
      * @Given /^第一集買了 (\d+) 本$/
@@ -18,7 +19,7 @@ class FeatureContext implements Context
      */
     public function 第一集買了本(int $number)
     {
-        $this->first_season = $number;
+        $this->potterShoppingCart->addBook(1, $number);
     }
 
     /**
@@ -27,7 +28,7 @@ class FeatureContext implements Context
      */
     public function 第二集買了本(int $number)
     {
-        $this->second_season = $number;
+        $this->potterShoppingCart->addBook(2, $number);
     }
 
     /**
@@ -36,7 +37,7 @@ class FeatureContext implements Context
      */
     public function 第三集買了本(int $number)
     {
-        $this->third_season = $number;
+        $this->potterShoppingCart->addBook(3, $number);
     }
 
     /**
@@ -45,7 +46,7 @@ class FeatureContext implements Context
      */
     public function 第四集買了本(int $number)
     {
-        $this->forth_season = $number;
+        $this->potterShoppingCart->addBook(4, $number);
     }
 
     /**
@@ -54,7 +55,7 @@ class FeatureContext implements Context
      */
     public function 第五集買了本(int $number)
     {
-        $this->fifth_season = $number;
+        $this->potterShoppingCart->addBook(5, $number);
     }
 
     /**
@@ -62,7 +63,7 @@ class FeatureContext implements Context
      */
     public function 結帳()
     {
-        $this->potterShoppingCart = new PotterShoppingCart($this->first_season, $this->second_season, $this->third_season, $this->forth_season, $this->fifth_season);
+        $this->total_price = $this->potterShoppingCart->getPrice();
     }
 
     /**
@@ -71,6 +72,6 @@ class FeatureContext implements Context
      */
     public function 價格應為元($expected)
     {
-        PHPUnit::assertEquals($expected, $this->potterShoppingCart->getPrice());
+        PHPUnit::assertEquals($expected, $this->total_price);
     }
 }
