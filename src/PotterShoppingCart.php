@@ -11,23 +11,21 @@ class PotterShoppingCart
 
     /**
      * PotterShoppingCart constructor.
-     * @param int $first_season
-     * @param int $second_season
-     * @param int $third_season
-     * @param int $forth_season
-     * @param int $fifth_season
      */
-    public function __construct(int $first_season = 0, int $second_season = 0, int $third_season = 0, int $forth_season = 0, int $fifth_season = 0)
+    public function __construct()
     {
-        $this->book_count = 0;
+        $this->book_count   = 0;
         $this->count_season = 0;
-        $this->books =[
-            $first_season,
-            $second_season,
-            $third_season,
-            $forth_season,
-            $fifth_season
-        ];
+        $this->books        = [];
+    }
+
+    /**
+     * @param int $season_num 購買第幾集的書
+     * @param int $number     購買此集的書幾本
+     */
+    public function addBook(int $season_num, int $number)
+    {
+        $this->books[$season_num] = $number;
     }
 
     /**
@@ -37,10 +35,10 @@ class PotterShoppingCart
     public function getPrice()
     {
         $result = 0;
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $this->book_count = 0;
             $this->count_season = 0;
-            for ($j = 0; $j < 5; $j++) {
+            for ($j = 1; $j <= 5; $j++) {
                 if ($this->books[$j] <= 0) {
                     continue;
                 }
